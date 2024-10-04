@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .age-calculator {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .age-calculator h2 {
+            text-align: center;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .input-container label {
+            margin-bottom: 5px;
+        }
+
+        .input-container input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="age-calculator">
+        <h2>Age Calculator</h2>
+        <form id="ageForm">
+            <div class="input-container">
+                <label for="day">Day</label>
+                <input type="number" id="day" name="day" min="1" max="31" required>
+            </div>
+            <div class="input-container">
+                <label for="month">Month</label>
+                <input type="number" id="month" name="month" min="1" max="12" required>
+            </div>
+            <div class="input-container">
+                <label for="year">Year</label>
+                <input type="number" id="year" name="year" min="1900" max="2024" required>
+            </div>
+            <button type="submit" class="submit-btn">Calculate Age</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('ageForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            calculateAge();
+        });
+
+        function calculateAge() {
+            // Get input values
+            const day = document.getElementById('day').value;
+            const month = document.getElementById('month').value;
+            const year = document.getElementById('year').value;
+
+            // Get the current date
+            const currentDate = new Date();
+            const currentDay = currentDate.getDate();
+            const currentMonth = currentDate.getMonth() + 1; // getMonth() returns 0-11
+            const currentYear = currentDate.getFullYear();
+
+            // Calculate age
+            let age = currentYear - year;
+
+            // Check if the birthday has passed this year or not
+            if (currentMonth < month || (currentMonth == month && currentDay < day)) {
+                age--;
+            }
+
+            // Display the result
+            const resultElement = document.getElementById('result');
+            if (age >= 0) {
+                resultElement.innerHTML = "Your age is: " + age + " years.";
+            } else {
+                resultElement.innerHTML = "Invalid Date of Birth";
+            }
+        }
+    </script>
+
+</body>
+</html>
